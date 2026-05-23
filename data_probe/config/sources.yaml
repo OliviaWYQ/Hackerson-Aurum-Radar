@@ -1,0 +1,261 @@
+news:
+  - name: Google News – Gold Jewellery SG
+    market: Singapore
+    url: https://news.google.com/rss/search?q=gold+jewellery+Singapore&hl=en-SG&gl=SG&ceid=SG:en
+    method: rss
+  - name: Google News – Luxury Jewelry SG
+    market: Singapore
+    url: https://news.google.com/rss/search?q=luxury+jewelry+Singapore&hl=en-SG&gl=SG&ceid=SG:en
+    method: rss
+  - name: Google News – Gold Price SG
+    market: Singapore
+    url: https://news.google.com/rss/search?q=gold+price+Singapore+jeweller&hl=en-SG&gl=SG&ceid=SG:en
+    method: rss
+
+competitors:
+  - brand: Tiffany
+    market: Singapore
+    url: https://www.tiffany.com/jewelry/
+    method: html
+  - brand: Cartier
+    market: Singapore
+    url: https://www.cartier.com/en-sg/collections/jewellery.html
+    method: html
+  - brand: Chow Tai Fook
+    market: Singapore
+    url: https://www.chowtaifook.com/en/collections/jewellery
+    method: html
+
+platform_policy:
+  - platform: Shopee
+    market: Singapore
+    method: html_multi
+    urls:
+      - https://help.shopee.sg/portal/4/article/77151-Prohibited%20and%20Restricted%20Items%20Policy
+      - https://help.shopee.sg/portal/4/article/77211-List%20of%20Prohibited%20Products
+      - https://help.shopee.sg/portal/4/article/77154-Shopee%20Advertising%20Policy
+      - https://help.shopee.sg/portal/10/article/191914-Commissions%20Structure%20%28W.e.f.%202%20January%202026%29
+  - platform: Lazada
+    market: Singapore
+    url: https://news.google.com/rss/search?q=Lazada+Singapore+seller+policy+fee+category&hl=en-SG&gl=SG&ceid=SG:en
+    method: rss
+
+regulations:
+  - name: Singapore Customs
+    market: Singapore
+    url: https://www.customs.gov.sg/
+    method: html
+  - name: Monetary Authority of Singapore
+    market: Singapore
+    url: https://www.mas.gov.sg/regulation/precious-stones-and-precious-metals
+    method: html
+
+market_data:
+  gold:
+    provider: yahoo_finance
+    symbol: "GC=F"
+    currency: USD
+    fallback_provider: goldapi
+  fx:
+    provider: yahoo_finance
+    pairs:
+      - symbol: "USDSGD=X"
+        base: USD
+        target: SGD
+      - symbol: "USDCNY=X"
+        base: USD
+        target: CNY
+      - symbol: "USDHKD=X"
+        base: USD
+        target: HKD
+    fallback_provider: exchangerate
+
+malls:
+  - name: Marina Bay Sands
+    market: Singapore
+    url: https://news.google.com/rss/search?q=%22Marina+Bay+Sands%22+jewellery+OR+watch+OR+luxury+OR+event&hl=en-SG&gl=SG&ceid=SG:en
+    method: rss
+  - name: Ion Orchard
+    market: Singapore
+    url: https://news.google.com/rss/search?q=%22ION+Orchard%22+jewellery+OR+watch+OR+luxury+OR+popup&hl=en-SG&gl=SG&ceid=SG:en
+    method: rss
+  - name: Ion Orchard Events
+    market: Singapore
+    url: https://www.ionorchard.com/en/events.html
+    method: html
+  - name: Paragon
+    market: Singapore
+    url: https://news.google.com/rss/search?q=%22Paragon%22+Singapore+jewellery+OR+luxury+OR+watch+OR+event&hl=en-SG&gl=SG&ceid=SG:en
+    method: rss
+
+# ============================================================
+# Global intelligence sources (PRD 爬虫2)
+# Consumed by probe_gdelt / probe_global_news / probe_federal_register /
+# probe_tavily. Markets and keywords pulled from markets.yaml + keywords.yaml
+# at runtime.
+# ============================================================
+
+gdelt:
+  source_id: gdelt_doc
+  source_name: GDELT 2.0 DOC API
+  source_type: news
+  access_type: api
+  cost_type: free
+  enabled: true
+  url: https://www.gdeltproject.org/
+  api_url: https://api.gdeltproject.org/api/v2/doc/doc
+  markets: [JP, KR, SG, TH, MY, VN, ID, PH, US]
+  schedule: daily
+  notes: 免费全球新闻流，跨市场新闻监控；每查询取最多 50 条 ArtList
+  # 每个市场的核心查询（market_code -> [query])
+  queries:
+    JP: ["jewelry market Japan", "luxury jewelry Japan", "gold jewelry Japan"]
+    KR: ["jewelry market Korea", "lab grown diamond Korea", "luxury jewelry Korea"]
+    SG: ["jewelry market Singapore", "Chow Tai Fook Singapore", "luxury jewelry Singapore"]
+    TH: ["jewelry market Thailand", "gold jewelry Thailand"]
+    MY: ["jewelry market Malaysia", "gold jewelry Malaysia"]
+    VN: ["jewelry market Vietnam", "gold jewelry Vietnam"]
+    ID: ["jewelry market Indonesia", "gold jewelry Indonesia"]
+    PH: ["jewelry market Philippines", "gold jewelry Philippines"]
+    US: ["luxury jewelry United States", "lab grown diamond United States", "engagement ring United States"]
+
+global_news:
+  source_id: google_news_rss
+  source_name: Google News RSS (multi-market)
+  source_type: news
+  access_type: rss
+  cost_type: free
+  enabled: true
+  url_template: https://news.google.com/rss/search?q={query}&hl={hl}&gl={gl}&ceid={ceid}
+  markets: [JP, KR, SG, TH, MY, VN, ID, PH, US]
+  # 每个市场最多组合多少查询（控制速率）
+  max_queries_per_market: 5
+  max_entries_per_feed: 15
+  # 用 keywords.yaml 的哪几组组合：与 market name 拼接
+  query_keyword_groups: [market_topics, brands]
+  notes: 按 market × keyword 笛卡尔积拼装 RSS URL
+
+federal_register:
+  source_id: federal_register
+  source_name: US Federal Register
+  source_type: regulation
+  access_type: api
+  cost_type: free
+  enabled: true
+  url: https://www.federalregister.gov/
+  api_url: https://www.federalregister.gov/api/v1/articles.json
+  markets: [US]
+  per_page: 20
+  # 关键词来自 keywords.yaml:regulation_terms
+  notes: 美国联邦公报；关键词来自 keywords.regulation_terms
+
+tavily:
+  source_id: tavily
+  source_name: Tavily Search
+  source_type: news
+  access_type: api
+  cost_type: paid
+  enabled: true
+  # 重点补强 JP 与东南亚 6 国（US/KR 已有 GDELT/Federal Register 兜底，
+  # 暂时不消耗 Tavily 配额。需要全量时改回 9 市场即可）
+  markets: [JP, SG, TH, MY, VN, ID, PH]
+  topic: news
+  days: 30
+  max_results_per_query: 8
+  # 查询模板（{brand}/{market_topic}/{market_name} 在运行时替换）
+  query_templates:
+    - "{market_topic} {market_name} 2026"
+    - "{brand} {market_name} jewelry"
+  # 每个市场最多多少查询（控制 API 配额）
+  max_queries_per_market: 6
+  notes: 使用 TAVILY_API_KEY；24h 文件缓存避免重复消费配额
+
+# ============================================================
+# Registry-only catalog — sources that are LOGGED for future
+# implementation but no probe currently calls them. Field set
+# follows PRD §3 (source_id / source_name / source_type /
+# access_type / cost_type / markets / url / notes).
+# ============================================================
+
+registry_only:
+  news:
+    - {source_id: reuters_rss, source_name: Reuters RSS, source_type: news, access_type: rss, cost_type: free, markets: [GLOBAL], url: "https://www.reuters.com/tools/rss"}
+    - {source_id: cnbc_rss, source_name: CNBC RSS, source_type: news, access_type: rss, cost_type: free, markets: [US, GLOBAL], url: "https://www.cnbc.com/rss-feeds/"}
+    - {source_id: wsj_rss, source_name: WSJ RSS, source_type: news, access_type: rss, cost_type: freemium, markets: [US, GLOBAL], url: "https://feeds.a.dj.com/rss/"}
+    - {source_id: ft_rss, source_name: Financial Times RSS, source_type: news, access_type: rss, cost_type: freemium, markets: [GLOBAL], url: "https://www.ft.com/rss"}
+    - {source_id: nikkei_asia_rss, source_name: Nikkei Asia RSS, source_type: news, access_type: rss, cost_type: free, markets: [JP, GLOBAL], url: "https://asia.nikkei.com/rss"}
+    - {source_id: japan_times, source_name: The Japan Times, source_type: news, access_type: html, cost_type: free, markets: [JP], url: "https://www.japantimes.co.jp/"}
+    - {source_id: korea_herald, source_name: Korea Herald, source_type: news, access_type: html, cost_type: free, markets: [KR], url: "https://www.koreaherald.com/"}
+    - {source_id: korea_joongang, source_name: Korea JoongAng Daily, source_type: news, access_type: html, cost_type: free, markets: [KR], url: "https://koreajoongangdaily.joins.com/"}
+    - {source_id: straits_times, source_name: The Straits Times, source_type: news, access_type: html, cost_type: freemium, markets: [SG], url: "https://www.straitstimes.com/"}
+    - {source_id: bangkok_post, source_name: Bangkok Post, source_type: news, access_type: html, cost_type: free, markets: [TH], url: "https://www.bangkokpost.com/"}
+    - {source_id: vietnam_news, source_name: Vietnam News, source_type: news, access_type: html, cost_type: free, markets: [VN], url: "https://vietnamnews.vn/"}
+    - {source_id: jakarta_post, source_name: Jakarta Post, source_type: news, access_type: html, cost_type: free, markets: [ID], url: "https://www.thejakartapost.com/"}
+    - {source_id: newsapi, source_name: NewsAPI, source_type: news, access_type: api, cost_type: paid, markets: [GLOBAL], url: "https://newsapi.org/"}
+    - {source_id: event_registry, source_name: Event Registry, source_type: news, access_type: api, cost_type: paid, markets: [GLOBAL], url: "https://eventregistry.org/"}
+    - {source_id: tiingo_news, source_name: Tiingo News API, source_type: news, access_type: api, cost_type: paid, markets: [GLOBAL], url: "https://www.tiingo.com/products/news-api"}
+    - {source_id: alphavantage_news, source_name: AlphaVantage News & Sentiment, source_type: news, access_type: api, cost_type: freemium, markets: [GLOBAL], url: "https://www.alphavantage.co/documentation/#news-sentiment"}
+
+  social:
+    - {source_id: reddit_api, source_name: Reddit API, source_type: social, access_type: api, cost_type: freemium, markets: [US, GLOBAL], url: "https://www.reddit.com/dev/api/", notes: "opt-in via probe_reddit; needs REDDIT_CLIENT_ID/SECRET"}
+    - {source_id: subreddit_jewelry, source_name: r/jewelry, source_type: social, access_type: api, cost_type: freemium, markets: [GLOBAL], url: "https://www.reddit.com/r/jewelry/"}
+    - {source_id: subreddit_engagement_rings, source_name: r/EngagementRings, source_type: social, access_type: api, cost_type: freemium, markets: [GLOBAL], url: "https://www.reddit.com/r/EngagementRings/"}
+    - {source_id: subreddit_diamonds, source_name: r/Diamonds, source_type: social, access_type: api, cost_type: freemium, markets: [GLOBAL], url: "https://www.reddit.com/r/Diamonds/"}
+    - {source_id: subreddit_luxury, source_name: r/luxury, source_type: social, access_type: api, cost_type: freemium, markets: [GLOBAL], url: "https://www.reddit.com/r/luxury/"}
+    - {source_id: subreddit_femalefashion, source_name: r/femalefashionadvice, source_type: social, access_type: api, cost_type: freemium, markets: [GLOBAL], url: "https://www.reddit.com/r/femalefashionadvice/"}
+    - {source_id: subreddit_watches, source_name: r/watches, source_type: social, access_type: api, cost_type: freemium, markets: [GLOBAL], url: "https://www.reddit.com/r/watches/"}
+    - {source_id: x_api, source_name: X / Twitter API v2, source_type: social, access_type: api, cost_type: paid, markets: [GLOBAL], url: "https://developer.x.com/", notes: "高成本，仅登记"}
+    - {source_id: tiktok_research, source_name: TikTok Research API, source_type: social, access_type: api, cost_type: restricted, markets: [GLOBAL], url: "https://developers.tiktok.com/products/research-api/"}
+    - {source_id: tiktok_creative_center, source_name: TikTok Creative Center, source_type: social, access_type: manual, cost_type: free, markets: [GLOBAL], url: "https://ads.tiktok.com/business/creativecenter/"}
+    - {source_id: instagram_graph_api, source_name: Instagram Graph API, source_type: social, access_type: api, cost_type: restricted, markets: [GLOBAL], url: "https://developers.facebook.com/docs/instagram-platform/"}
+    - {source_id: instagram_hashtag_search, source_name: Instagram Hashtag Search, source_type: social, access_type: api, cost_type: restricted, markets: [GLOBAL], url: "https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/hashtag-search/"}
+
+  trend:
+    - {source_id: google_trends, source_name: Google Trends, source_type: trend, access_type: restricted, cost_type: restricted, markets: [GLOBAL], url: "https://trends.google.com/trends/", notes: "官方 Trends API 需申请"}
+    - {source_id: pytrends, source_name: pytrends (unofficial), source_type: trend, access_type: api, cost_type: free, markets: [GLOBAL], url: "https://github.com/GeneralMills/pytrends", notes: "opt-in via probe_trends; 非官方易限流"}
+    - {source_id: baidu_index, source_name: Baidu Index / 百度指数, source_type: trend, access_type: restricted, cost_type: freemium, markets: [CN], url: "https://index.baidu.com/v2/index.html#/", notes: "页面依赖 JS/登录态，无 probe；生产化需官方授权或 licensed data provider"}
+    - {source_id: serpapi_trends, source_name: SerpAPI Google Trends, source_type: trend, access_type: api, cost_type: paid, markets: [GLOBAL], url: "https://serpapi.com/google-trends-api"}
+    - {source_id: dataforseo_trends, source_name: DataForSEO Trends API, source_type: trend, access_type: api, cost_type: paid, markets: [GLOBAL], url: "https://dataforseo.com/apis/google-trends-api"}
+
+  ecommerce:
+    - {source_id: amazon_sp_api, source_name: Amazon SP-API, source_type: ecommerce, access_type: api, cost_type: free, markets: [US, GLOBAL], url: "https://developer-docs.amazon.com/sp-api/"}
+    - {source_id: shopify_partners_blog, source_name: Shopify Partners Blog, source_type: ecommerce, access_type: html, cost_type: free, markets: [GLOBAL], url: "https://www.shopify.com/partners/blog"}
+    - {source_id: ebay_dev_announcements, source_name: eBay Developer Announcements, source_type: ecommerce, access_type: html, cost_type: free, markets: [US, GLOBAL], url: "https://developer.ebay.com/develop/release-notes"}
+    - {source_id: etsy_developers, source_name: Etsy Developers, source_type: ecommerce, access_type: html, cost_type: free, markets: [US, GLOBAL], url: "https://developers.etsy.com/"}
+    - {source_id: shopee_seller_center, source_name: Shopee Seller Center, source_type: ecommerce, access_type: html, cost_type: free, markets: [SG, TH, MY, VN, ID, PH], url: "https://seller.shopee.com/"}
+    - {source_id: tiktok_shop_seller, source_name: TikTok Shop Seller Announcements, source_type: ecommerce, access_type: html, cost_type: free, markets: [US, GLOBAL], url: "https://seller-us.tiktok.com/university/announcements"}
+    - {source_id: rakuten_dev, source_name: Rakuten Developers, source_type: ecommerce, access_type: api, cost_type: free, markets: [JP], url: "https://webservice.rakuten.co.jp/"}
+    - {source_id: naver_dev, source_name: Naver Developers, source_type: ecommerce, access_type: api, cost_type: free, markets: [KR], url: "https://developers.naver.com/"}
+    - {source_id: coupang_dev, source_name: Coupang Open API, source_type: ecommerce, access_type: api, cost_type: free, markets: [KR], url: "https://developers.coupang.com/"}
+
+  report:
+    - {source_id: mckinsey, source_name: McKinsey Insights, source_type: report, access_type: html, cost_type: free, markets: [GLOBAL], url: "https://www.mckinsey.com/insights"}
+    - {source_id: bain, source_name: Bain Insights, source_type: report, access_type: html, cost_type: free, markets: [GLOBAL], url: "https://www.bain.com/insights/"}
+    - {source_id: bcg, source_name: BCG Publications, source_type: report, access_type: html, cost_type: free, markets: [GLOBAL], url: "https://www.bcg.com/publications"}
+    - {source_id: deloitte, source_name: Deloitte Insights, source_type: report, access_type: html, cost_type: free, markets: [GLOBAL], url: "https://www.deloitte.com/"}
+    - {source_id: world_gold_council, source_name: World Gold Council, source_type: report, access_type: html, cost_type: free, markets: [GLOBAL], url: "https://www.gold.org/"}
+    - {source_id: debeers, source_name: De Beers Reports, source_type: report, access_type: html, cost_type: free, markets: [GLOBAL], url: "https://www.debeersgroup.com/reports"}
+    - {source_id: gia, source_name: GIA, source_type: report, access_type: html, cost_type: free, markets: [GLOBAL], url: "https://www.gia.edu/"}
+    - {source_id: world_bank_api, source_name: World Bank API, source_type: report, access_type: api, cost_type: free, markets: [GLOBAL], url: "https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation"}
+    - {source_id: imf_api, source_name: IMF Data API, source_type: report, access_type: api, cost_type: free, markets: [GLOBAL], url: "https://data.imf.org/en/Resource-Pages/IMF-API"}
+    - {source_id: oecd_api, source_name: OECD Data API, source_type: report, access_type: api, cost_type: free, markets: [GLOBAL], url: "https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html"}
+    - {source_id: un_comtrade, source_name: UN Comtrade, source_type: report, access_type: api, cost_type: free, markets: [GLOBAL], url: "https://comtrade.un.org/"}
+
+  regulation:
+    - {source_id: sec_rules, source_name: SEC Rules, source_type: regulation, access_type: html, cost_type: free, markets: [US], url: "https://www.sec.gov/rules.htm"}
+    - {source_id: ofac, source_name: OFAC Sanctions, source_type: regulation, access_type: html, cost_type: free, markets: [US], url: "https://ofac.treasury.gov/"}
+    - {source_id: ftc, source_name: FTC, source_type: regulation, access_type: html, cost_type: free, markets: [US], url: "https://www.ftc.gov/"}
+    - {source_id: egov_japan, source_name: e-Gov Law Search Japan, source_type: regulation, access_type: html, cost_type: free, markets: [JP], url: "https://elaws.e-gov.go.jp/"}
+    - {source_id: fsa_japan, source_name: FSA Japan, source_type: regulation, access_type: html, cost_type: free, markets: [JP], url: "https://www.fsa.go.jp/"}
+    - {source_id: meti_japan, source_name: METI Japan, source_type: regulation, access_type: html, cost_type: free, markets: [JP], url: "https://www.meti.go.jp/"}
+    - {source_id: japan_customs, source_name: Japan Customs, source_type: regulation, access_type: html, cost_type: free, markets: [JP], url: "https://www.customs.go.jp/"}
+    - {source_id: korea_law, source_name: Korean Law Information Center, source_type: regulation, access_type: html, cost_type: free, markets: [KR], url: "https://www.law.go.kr/"}
+    - {source_id: kftc, source_name: Korea Fair Trade Commission, source_type: regulation, access_type: html, cost_type: free, markets: [KR], url: "https://www.ftc.go.kr/"}
+    - {source_id: korea_customs, source_name: Korea Customs Service, source_type: regulation, access_type: html, cost_type: free, markets: [KR], url: "https://www.customs.go.kr/"}
+    - {source_id: sso_singapore, source_name: Singapore Statutes Online, source_type: regulation, access_type: html, cost_type: free, markets: [SG], url: "https://sso.agc.gov.sg/"}
+    - {source_id: mas_singapore, source_name: MAS Singapore, source_type: regulation, access_type: html, cost_type: free, markets: [SG], url: "https://www.mas.gov.sg/"}
+    - {source_id: thailand_royal_gazette, source_name: Thailand Royal Gazette, source_type: regulation, access_type: html, cost_type: free, markets: [TH], url: "https://ratchakitcha.soc.go.th/"}
+    - {source_id: vietnam_moit, source_name: Vietnam Ministry of Industry and Trade, source_type: regulation, access_type: html, cost_type: free, markets: [VN], url: "https://moit.gov.vn/"}
+    - {source_id: indonesia_kemendag, source_name: Indonesia Ministry of Trade, source_type: regulation, access_type: html, cost_type: free, markets: [ID], url: "https://www.kemendag.go.id/"}
+    - {source_id: malaysia_agc, source_name: Malaysia AGC, source_type: regulation, access_type: html, cost_type: free, markets: [MY], url: "https://lom.agc.gov.my/"}
+    - {source_id: philippines_gazette, source_name: Philippines Official Gazette, source_type: regulation, access_type: html, cost_type: free, markets: [PH], url: "https://www.officialgazette.gov.ph/"}

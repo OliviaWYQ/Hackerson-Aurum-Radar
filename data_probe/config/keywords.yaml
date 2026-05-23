@@ -1,0 +1,60 @@
+# Keyword groups for global intelligence probes.
+# Consumed by probe_gdelt, probe_global_news, probe_tavily, probe_reddit.
+
+brands:
+  - "Chow Tai Fook"
+  - "周大福"
+  - "Cartier"
+  - "Van Cleef"
+  - "Van Cleef & Arpels"
+  - "Tiffany"
+  - "Bvlgari"
+  - "Pandora"
+  - "Mikimoto"
+  - "Chow Sang Sang"
+  - "Lukfook"
+
+products:
+  - "gold jewelry"
+  - "diamond jewelry"
+  - "lab grown diamond"
+  - "engagement ring"
+  - "wedding ring"
+  - "gold bracelet"
+  - "gold necklace"
+  - "pearl jewelry"
+  - "luxury jewelry"
+
+market_topics:
+  - "jewelry market"
+  - "luxury consumption"
+  - "gold price"
+  - "consumer sentiment"
+  - "tourism retail"
+  - "duty free"
+  - "ecommerce policy"
+  - "platform rule"
+  - "import tariff"
+  - "anti money laundering"
+  - "precious metals regulation"
+  - "diamond import"
+  - "supply chain traceability"
+
+platforms:
+  - "Amazon jewelry"
+  - "Shopee jewelry"
+  - "Lazada jewelry"
+  - "Rakuten jewelry"
+  - "Naver shopping jewelry"
+  - "TikTok Shop jewelry"
+
+# Regulation-specific terms used by probe_federal_register (US-only).
+regulation_terms:
+  - "jewelry"
+  - "gold"
+  - "diamond"
+  - "precious metals"
+  - "tariff"
+  - "customs"
+  - "anti money laundering"
+  - "consumer protection"

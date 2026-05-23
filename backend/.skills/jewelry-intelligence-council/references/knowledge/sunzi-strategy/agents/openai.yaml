@@ -1,0 +1,4 @@
+interface:
+  display_name: "孙子谋略"
+  short_description: "用《孙子兵法》拆解生活、商业、组织与谈判中的复杂局势。"
+  default_prompt: "使用 $sunzi-strategy 分析这个局，拆出敌我、虚实、势和最合适的低成本动作。"

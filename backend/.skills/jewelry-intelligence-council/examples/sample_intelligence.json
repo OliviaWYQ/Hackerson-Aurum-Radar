@@ -1,0 +1,90 @@
+{
+  "batch_meta": {
+    "market": "Singapore",
+    "region": "东南亚",
+    "time_window": "2026-05-01/2026-05-21",
+    "item_count": 5
+  },
+  "items": [
+    {
+      "id": "intel-001",
+      "market": "Global",
+      "region": "全球",
+      "source_type": "report",
+      "source_name": "World Gold Council 月度报告",
+      "source_url": "https://www.gold.org/goldhub/research/2026-05",
+      "published_at": "2026-05-08",
+      "category": "price",
+      "event_summary": "国际金价 5 月上旬突破每盎司 2680 美元，月内涨幅约 6%，机构归因于避险需求与美元走弱。",
+      "raw_excerpt": "Gold breached USD 2,680/oz in early May, up ~6% MoM, driven by safe-haven demand and a softer dollar; analysts split on whether the rally is structural.",
+      "sentiment": "mixed",
+      "impact_area": ["pricing", "supply", "product"],
+      "confidence": 0.9,
+      "tags": ["黄金", "金价", "宏观"]
+    },
+    {
+      "id": "intel-002",
+      "market": "Singapore",
+      "region": "东南亚",
+      "source_type": "news",
+      "source_name": "The Straits Times",
+      "source_url": "https://www.straitstimes.com/business/2026-05-pandora-sea-expansion",
+      "published_at": "2026-05-12",
+      "category": "competition",
+      "event_summary": "Pandora 宣布未来 6 个月在东南亚新增 12 家门店，其中新加坡 3 家，集中在中端商场，主打 K金与银饰轻奢线。",
+      "raw_excerpt": "Pandora to add 12 SEA stores in six months, three in Singapore, located in mid-tier malls, focused on its affordable K-gold and silver collections.",
+      "sentiment": "neutral",
+      "impact_area": ["channel", "brand", "pricing"],
+      "confidence": 0.8,
+      "tags": ["竞品", "Pandora", "门店扩张", "K金", "轻奢"]
+    },
+    {
+      "id": "intel-003",
+      "market": "Singapore",
+      "region": "东南亚",
+      "source_type": "social",
+      "source_name": "TikTok",
+      "source_url": "https://www.tiktok.com/tag/pearlcore",
+      "published_at": "2026-05-15",
+      "category": "social",
+      "event_summary": "新加坡 TikTok 上 #pearlcore 话题播放量月内增长约 3 倍，年轻用户把珍珠饰品当日常通勤与毕业季配饰讨论，晒单客单价偏低。",
+      "raw_excerpt": "#pearlcore views in SG tripled this month; Gen-Z creators frame pearls as everyday and graduation-season wear, most hauls under SGD 120.",
+      "sentiment": "positive",
+      "impact_area": ["product", "marketing"],
+      "confidence": 0.55,
+      "tags": ["珍珠", "年轻客群", "悦己", "社媒", "TikTok"]
+    },
+    {
+      "id": "intel-004",
+      "market": "Singapore",
+      "region": "东南亚",
+      "source_type": "regulator",
+      "source_name": "新加坡广告标准管理局（ASAS）",
+      "source_url": "https://asas.org.sg/guidelines/2026-precious-metals",
+      "published_at": "2026-05-10",
+      "category": "regulation",
+      "event_summary": "新加坡 ASAS 发布贵金属广告新指引，要求珠宝广告不得使用'保值''升值''稳赚'等投资性宣称，除非附合规风险提示，2026-07-01 起执行。",
+      "raw_excerpt": "ASAS new guideline bars jewelry ads from investment-style claims such as 'value-protected' or 'guaranteed return' without a compliant risk disclosure; effective 1 Jul 2026.",
+      "sentiment": "negative",
+      "impact_area": ["marketing", "compliance", "brand"],
+      "confidence": 0.95,
+      "tags": ["广告合规", "监管", "黄金", "投资宣称"]
+    },
+    {
+      "id": "intel-005",
+      "market": "Singapore",
+      "region": "东南亚",
+      "source_type": "ecommerce",
+      "source_name": "Lazada Singapore",
+      "source_url": "https://www.lazada.sg/shop-jewelry/campaign-2026-06",
+      "published_at": "2026-05-18",
+      "category": "channel",
+      "event_summary": "Lazada 新加坡站调整珠宝类目促销规则，6 月大促把流量位向'轻奢设计款'与'低克重金饰'倾斜，高克重投资金条退出主推位。",
+      "raw_excerpt": "Lazada SG reshapes June jewelry campaign: traffic slots tilt toward design-led affordable pieces and low-gram gold; high-gram gold bars dropped from hero placement.",
+      "sentiment": "mixed",
+      "impact_area": ["channel", "product", "pricing"],
+      "confidence": 0.75,
+      "tags": ["电商", "Lazada", "促销", "低克重金饰", "轻奢"]
+    }
+  ]
+}

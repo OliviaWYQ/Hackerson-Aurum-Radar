@@ -1,0 +1,262 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "情报关联分析输出 Schema v2.0",
+  "description": "关联分析结果：包含分析元数据、关联边、因果链、时序模式、隐性依赖、专家分歧、整体置信度与下一步观测点。每条判断均绑定证据。",
+  "type": "object",
+  "required": [
+    "analysis_meta",
+    "correlation_summary",
+    "correlation_edges",
+    "causal_chains",
+    "temporal_patterns",
+    "hidden_dependencies",
+    "expert_disagreements",
+    "overall_confidence",
+    "next_observation_points"
+  ],
+  "properties": {
+    "analysis_meta": {
+      "type": "object",
+      "description": "分析过程元数据。",
+      "required": ["skill_version", "input_event_count", "candidate_pairs_evaluated", "skipped_pairs", "time_window", "validation_passed"],
+      "properties": {
+        "skill_version": { "type": "string", "description": "技能版本，例如 2.0.0。" },
+        "input_event_count": { "type": "integer", "description": "输入事件条数。" },
+        "candidate_pairs_evaluated": { "type": "integer", "description": "第一步筛选后的候选对数量。" },
+        "skipped_pairs": { "type": "integer", "description": "超出 15 对上限被跳过的数量，无则填 0。" },
+        "time_window": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "object",
+              "properties": {
+                "start": { "type": "string" },
+                "end": { "type": "string" }
+              }
+            }
+          ],
+          "description": "来自 batch_meta.time_window。"
+        },
+        "validation_passed": { "type": "boolean", "description": "第零步校验是否通过。" }
+      }
+    },
+    "correlation_summary": {
+      "type": "string",
+      "description": "3-5 句话整体关联结论。句1：整体市场信号方向。句2：最强传导链路。句3：最值得关注的矛盾或分歧。句4-5（可选）：下一步观测建议。禁止模糊词。"
+    },
+    "correlation_edges": {
+      "type": "array",
+      "description": "事件间关联边。每条边连接两个事件，描述关联类型、强度与传导机制。",
+      "items": {
+        "type": "object",
+        "required": ["edge_id", "source_id", "target_id", "correlation_type", "strength", "mechanism", "time_lag_days", "within_reference_range", "evidence_ids", "confidence", "downgrade_reasons"],
+        "properties": {
+          "edge_id": { "type": "string", "description": "关联边 ID，格式 edge_01, edge_02 ..." },
+          "source_id": { "type": "string", "description": "关联源事件 event_id。" },
+          "target_id": { "type": "string", "description": "关联目标事件 event_id。" },
+          "correlation_type": {
+            "type": "string",
+            "enum": ["causal", "reinforcing", "contradicting", "co_occurrence", "lead_lag"],
+            "description": "关联类型：causal=因果、reinforcing=互相强化、contradicting=矛盾、co_occurrence=共现、lead_lag=领先滞后。"
+          },
+          "strength": {
+            "type": "string",
+            "enum": ["strong", "moderate", "weak"],
+            "description": "关联强度，来自 J4 判定树。"
+          },
+          "mechanism": {
+            "type": "string",
+            "description": "具体传导机制，必须包含施力主体+传导路径+受力客体，限 50 字。"
+          },
+          "time_lag_days": { "type": "integer", "description": "两事件间的日历天数差，来自 J1。" },
+          "within_reference_range": { "type": "boolean", "description": "time_lag_days 是否在传导时滞参考表范围内。" },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "支撑该关联的 event_id 列表，至少 1 条。"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0.20,
+            "maximum": 0.95,
+            "description": "来自 J5 计算公式，取值 [0.20, 0.95]。"
+          },
+          "downgrade_reasons": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "J5 中触发的 -0.10/-0.15 调整项，无则空数组。"
+          }
+        }
+      }
+    },
+    "causal_chains": {
+      "type": "array",
+      "description": "多级因果传导链路。链路置信度 = MIN(组成边 confidence) × 0.9。",
+      "items": {
+        "type": "object",
+        "required": ["chain_id", "nodes", "description", "total_lag_days", "alternative_explanation", "evidence_ids", "confidence"],
+        "properties": {
+          "chain_id": { "type": "string", "description": "链路 ID，格式 chain_01, chain_02 ..." },
+          "nodes": {
+            "type": "array",
+            "description": "链路上的事件节点，按传导顺序排列。",
+            "items": {
+              "type": "object",
+              "required": ["event_id", "role", "mechanism"],
+              "properties": {
+                "event_id": { "type": "string", "description": "事件 event_id，或推断节点描述。" },
+                "role": {
+                  "type": "string",
+                  "enum": ["trigger", "amplifier", "mediator", "outcome"],
+                  "description": "节点角色：trigger=触发、amplifier=放大、mediator=中介、outcome=结果。"
+                },
+                "mechanism": {
+                  "type": "string",
+                  "description": "该节点在链路中的作用机制，推断节点必须标注 [推断节点]。"
+                }
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "一句话描述整条链路核心逻辑，格式：[触发事件]经由[传导路径]导致[结果]，限 60 字。"
+          },
+          "total_lag_days": {
+            "type": "integer",
+            "description": "从 trigger 到 outcome 的总估算天数。"
+          },
+          "alternative_explanation": {
+            "type": "string",
+            "description": "必填：可能使本链路失效的共因假设或反向因果解释，限 60 字。"
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "所有组成边涉及的事件 event_id 去重列表。"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.95,
+            "description": "来自规则 C4：MIN(组成边 confidence) × 0.9。"
+          }
+        }
+      }
+    },
+    "temporal_patterns": {
+      "type": "array",
+      "description": "识别到的时序模式。前提条件：事件跨度 ≥ 14 天且同一因子/范围对应 ≥ 2 条事件。",
+      "items": {
+        "type": "object",
+        "required": ["pattern_id", "pattern_type", "description", "evidence_ids", "observed_count", "confidence"],
+        "properties": {
+          "pattern_id": { "type": "string", "description": "模式 ID，格式 tp_01 ..." },
+          "pattern_type": {
+            "type": "string",
+            "enum": ["lead_lag", "trend_turning", "intensity_cluster", "cross_market_sync"],
+            "description": "模式类型：lead_lag=领先滞后、trend_turning=趋势转向、intensity_cluster=强度聚集、cross_market_sync=跨市场同步。"
+          },
+          "description": { "type": "string", "description": "模式描述，必须包含观测到的具体数值。" },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "触发该识别的 event_id 列表，≥ 2 条。"
+          },
+          "observed_count": { "type": "integer", "description": "触发该模式识别的事件数量。" },
+          "confidence": {
+            "type": "number",
+            "maximum": 0.6,
+            "description": "单一时间窗口观测置信度不得超过 0.6。"
+          }
+        }
+      }
+    },
+    "hidden_dependencies": {
+      "type": "array",
+      "description": "隐性依赖：表面无直接关联但可能受同一底层宏观因素驱动的事件群。",
+      "items": {
+        "type": "object",
+        "required": ["dependency_id", "affected_event_ids", "hypothesized_driver", "evidence", "confidence", "competing_hypothesis"],
+        "properties": {
+          "dependency_id": { "type": "string", "description": "依赖 ID，格式 hd_01 ..." },
+          "affected_event_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "受该因素影响的事件 event_id 列表，≥ 2 条。"
+          },
+          "hypothesized_driver": {
+            "type": "string",
+            "description": "推测的底层驱动因素，必须是具体的宏观变量或事件，禁止泛化表述。"
+          },
+          "evidence": {
+            "type": "string",
+            "description": "支撑假设的具体特征，不接受模糊表述。"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 0.6,
+            "description": "假设性结论置信度上限 0.6。"
+          },
+          "competing_hypothesis": {
+            "type": "boolean",
+            "description": "是否存在另一个同样合理的共因假设。"
+          }
+        }
+      }
+    },
+    "expert_disagreements": {
+      "type": "array",
+      "description": "分析过程中未达成一致的分歧点，如实保留。",
+      "items": {
+        "type": "object",
+        "required": ["disagreement_id", "event_ids", "position_a", "position_b", "resolution"],
+        "properties": {
+          "disagreement_id": { "type": "string", "description": "分歧 ID，格式 dis_01 ..." },
+          "event_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "涉及的事件 event_id 列表。"
+          },
+          "position_a": { "type": "string", "description": "第一种解读及其支撑理由。" },
+          "position_b": { "type": "string", "description": "第二种解读及其支撑理由。" },
+          "resolution": { "type": "string", "description": "裁定结果，或 unresolved 表示暂未裁定。" }
+        }
+      }
+    },
+    "overall_confidence": {
+      "type": "object",
+      "description": "本报告的整体置信度评估。",
+      "required": ["score", "level", "limiting_factors"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "description": "所有 correlation_edges 的 confidence 均值，保留 2 位小数。"
+        },
+        "level": {
+          "type": "string",
+          "enum": ["high", "medium", "low"],
+          "description": "high(≥0.75) / medium(0.55-0.74) / low(<0.55)。"
+        },
+        "limiting_factors": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "拉低整体置信度的主要原因，最多 3 条。"
+        }
+      }
+    },
+    "next_observation_points": {
+      "type": "array",
+      "description": "下一步观测建议，用于验证或否定本报告的关联假设。",
+      "items": {
+        "type": "object",
+        "required": ["observation", "trigger_condition", "deadline_days", "related_chain_id"],
+        "properties": {
+          "observation": { "type": "string", "description": "具体的、可执行的下一步观测建议。" },
+          "trigger_condition": { "type": "string", "description": "满足什么条件时这个观测点会被确认或否定。" },
+          "deadline_days": { "type": "integer", "description": "建议在多少天内观测，否则信号时效失效。" },
+          "related_chain_id": { "type": "string", "description": "关联的 chain_id 或 edge_id。" }
+        }
+      }
+    }
+  }
+}

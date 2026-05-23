@@ -1,0 +1,317 @@
+{
+  "council_summary": "本批情报指向同一个结构性变化：新加坡珠宝需求正从'高克重投资属性'整体向'轻奢、低克重、设计感'迁移——金价上行抬高饰品金门槛、Lazada 流量改向设计款、TikTok 珍珠悦己情绪升温三者方向一致。同时 ASAS 新规将于 2026-07-01 切断金饰投资性话术，是必须先解决的合规硬约束。智囊团默认推荐中策：聚焦低克重/K金设计线承接迁移需求，珍珠悦己线小批量试水，并在 7 月前完成营销文案合规整改。金价上涨不构成笼统利好——它利好投资金条业务、却压制饰品金克重消费与毛利。",
+  "market": "Singapore",
+  "time_window": "2026-05-01/2026-05-21",
+  "key_signals": [
+    {
+      "signal": "国际金价 5 月上旬涨约 6%，突破 2680 美元/盎司。",
+      "interpretation": "对投资金条业务是需求利好；对饰品金、婚庆金是成本与客单上行压力，消费者会转向低克重、K金、工费款；悦己金饰受抑制最明显。不可笼统视为利好。",
+      "evidence_ids": ["intel-001"]
+    },
+    {
+      "signal": "Lazada 新加坡 6 月大促流量位改向轻奢设计款与低克重金饰，高克重投资金条退出主推。",
+      "interpretation": "平台侧已用流量分配确认需求迁移方向，是比社媒更硬的购买侧信号，渠道团队需据此重排选品。",
+      "evidence_ids": ["intel-005"]
+    },
+    {
+      "signal": "Pandora 6 个月内在东南亚开 12 店、新加坡 3 店，主打 K金银饰轻奢线。",
+      "interpretation": "竞品正在我方拟承接迁移需求的轻奢 K金价格带卡位，意味着该价格带的获客成本与价格战风险上升。",
+      "evidence_ids": ["intel-002"]
+    },
+    {
+      "signal": "TikTok #pearlcore 在新加坡播放量月内增长约 3 倍，年轻客群把珍珠当日常配饰。",
+      "interpretation": "是年轻悦己客群的情绪信号，但晒单客单价低、且仅社媒来源，尚不能确认为真实购买意愿。",
+      "evidence_ids": ["intel-003"]
+    }
+  ],
+  "opportunities": [
+    {
+      "title": "低克重/K金设计线承接需求迁移",
+      "detail": "金价上行（intel-001）+ Lazada 流量改向（intel-005）共同确认需求正从高克重投资金饰转向低克重、K金、设计感款。建议在新加坡市场以轻奢价格带（客单 SGD 200-600）的 K金与低克重设计线承接，并优先对接 Lazada 6 月大促流量位。利润前提：K金与工费款受金价波动影响小于足金克重款。",
+      "category": "K金 / 低克重饰品金",
+      "evidence_ids": ["intel-001", "intel-005"],
+      "confidence": 0.78
+    },
+    {
+      "title": "珍珠悦己线面向年轻客群的试探性机会",
+      "detail": "TikTok #pearlcore 情绪升温（intel-003）显示年轻悦己客群对珍珠日常化有兴趣，且珍珠不受金价影响、毛利结构独立。但当前仅社媒证据、客单价低，建议以小批量、低价带（客单 SGD 80-150）试水验证转化，不宜重仓。",
+      "category": "珍珠（悦己向）",
+      "evidence_ids": ["intel-003"],
+      "confidence": 0.42
+    }
+  ],
+  "risks": [
+    {
+      "title": "ASAS 新规切断金饰投资性营销话术",
+      "detail": "新加坡 ASAS 新指引（intel-004）自 2026-07-01 起禁止珠宝广告使用'保值''升值''稳赚'等投资性宣称。我方现有金饰营销文案若含此类表述，须在 7 月前完成替换或加合规风险提示，否则面临处罚与下架。这是一切金饰营销动作的前置硬约束。",
+      "severity": "high",
+      "evidence_ids": ["intel-004"],
+      "confidence": 0.95
+    },
+    {
+      "title": "金价上行压缩饰品金毛利",
+      "detail": "金价月内涨约 6%（intel-001），若饰品金、婚庆金售价不能同步上调，毛利将被直接侵蚀；同步调价又会进一步抑制克重消费。需通过套保与产品结构（提高 K金/工费款占比）双向缓释。",
+      "severity": "high",
+      "evidence_ids": ["intel-001"],
+      "confidence": 0.85
+    },
+    {
+      "title": "Pandora 在轻奢 K金价格带正面卡位",
+      "detail": "Pandora 在东南亚（含新加坡 3 店）扩张并主打 K金银饰轻奢线（intel-002），与我方拟承接迁移需求的轻奢 K金线在价格带和客群上正面重叠，将抬高该价格带的获客成本，并存在价格战风险。",
+      "severity": "medium",
+      "evidence_ids": ["intel-002"],
+      "confidence": 0.7
+    }
+  ],
+  "watch_items": [
+    {
+      "item": "珍珠悦己情绪能否转化为真实购买意愿",
+      "why_uncertain": "intel-003 仅有 TikTok 单一社媒来源、情报自身 confidence 仅 0.55，且晒单客单价低，讨论热度可能高估真实需求。需电商成交/加购数据佐证。",
+      "evidence_ids": ["intel-003"]
+    },
+    {
+      "item": "金价此轮上涨是结构性还是脉冲型",
+      "why_uncertain": "intel-001 明确指出机构对涨势是否结构性存在分歧。若为脉冲型，套保与产品结构调整的力度应保守。",
+      "evidence_ids": ["intel-001"]
+    }
+  ],
+  "strategic_options": {
+    "upper_strategy": {
+      "name": "上策 · 重仓轻奢迁移",
+      "classical_basis": "高地占位 + 兵贵神速 + 节庆爆点：窗口期紧迫，以铺货速度抢占轻奢价格带制高点，借 Lazada 6 月大促节点集中爆发。",
+      "description": "全力承接需求迁移：快速扩充 K金与低克重设计线 SKU，抢占 Lazada 6 月大促全部可竞流量位，同步上新珍珠悦己线，以铺货速度压过 Pandora 的开店节奏。",
+      "preconditions": [
+        "7 月前完成全部金饰营销文案的 ASAS 合规整改",
+        "供应链能在 4 周内放量 K金/低克重设计款",
+        "珍珠线在小批量测试中验证出可接受的转化率"
+      ],
+      "cost": "高库存与营销投入；若珍珠需求被证伪或金价回落，存在滞销与减值风险。",
+      "expected_outcome": "在迁移趋势中抢得轻奢价格带份额，但风险敞口最大。"
+    },
+    "middle_strategy": {
+      "name": "中策 · 聚焦承接 + 试水（默认推荐）",
+      "classical_basis": "避实击虚 + 轻骑探路：避开与 Pandora 的纯价格红海，集中力量承接确定性迁移需求，珍珠线以轻资产小批量试错。",
+      "description": "集中资源做低克重/K金设计线对接 Lazada 6 月流量位；珍珠悦己线以小批量低价带试水验证；营销文案合规整改先行；对 Pandora 采取错位策略（强化设计原创性与本地文化元素，避开纯价格竞争）。",
+      "preconditions": [
+        "7 月前完成金饰营销文案 ASAS 合规整改",
+        "珍珠线控制在小批量试水规模"
+      ],
+      "cost": "中等库存与营销投入；放弃了部分上策的抢位速度。",
+      "expected_outcome": "稳健承接确定性较高的迁移需求，珍珠机会留有验证退路，合规与毛利风险可控。"
+    },
+    "lower_strategy": {
+      "name": "下策 · 守势整改",
+      "classical_basis": "可退可进 + 以逸待劳：合规与金价证据未明时不轻动，先固守基本盘，待趋势确认再出手。",
+      "description": "本季度不扩张新品，仅完成 ASAS 合规文案整改与金价套保，维持现有产品结构观察金价与珍珠需求的后续证据。",
+      "preconditions": ["管理层判断金价波动与需求迁移证据尚不足以支撑投入"],
+      "cost": "错失 Lazada 6 月流量窗口与迁移趋势的先发位置。",
+      "expected_outcome": "风险敞口最小，但可能把轻奢价格带让给 Pandora 等竞品。"
+    }
+  },
+  "department_actions": {
+    "product_team": [
+      {
+        "action": "Lazada 上新 K金/低克重设计线",
+        "detail": "扩充 K金与低克重（≤3g）设计款 SKU，集中在轻奢价格带（客单 SGD 200-600），供应链 4 周内放量以对接 Lazada 6 月大促。",
+        "rationale": "金价上行抬高足金克重门槛（intel-001），Lazada 流量已改向轻奢设计款（intel-005）——需用 K金/低克重线承接这部分迁移需求。",
+        "expected_output": "12-15 个轻奢价格带 K金/低克重 SKU 上架",
+        "success_metric": "新线 SKU 在 6 月大促期间售罄率 ≥ 60%",
+        "market": "Singapore",
+        "category": "K金 / 低克重饰品金",
+        "channel": "Lazada / 线下门店",
+        "priority": "P1",
+        "evidence_ids": ["intel-001", "intel-005"]
+      },
+      {
+        "action": "珍珠悦己线小批量试水",
+        "detail": "开发 2-3 个珍珠悦己测试 SKU，价格带 SGD 80-150，只做小批量，用于验证转化而非铺货。",
+        "rationale": "intel-003 的珍珠热度仅 TikTok 单一社媒来源、客单价低，属情绪信号——只能小批量试水验证真实购买意愿，不可重仓。",
+        "expected_output": "2-3 个珍珠测试 SKU 及一轮转化数据",
+        "success_metric": "测试款加购转化率不低于品类基准",
+        "market": "Singapore",
+        "category": "珍珠",
+        "channel": "Lazada / TikTok Shop",
+        "priority": "P2",
+        "evidence_ids": ["intel-003"]
+      }
+    ],
+    "marketing_team": [
+      {
+        "action": "金饰营销文案 ASAS 合规整改",
+        "detail": "7 月前审查全部金饰营销文案，删除'保值/升值/稳赚'等投资性宣称，或加合规风险提示。",
+        "rationale": "ASAS 新指引（intel-004）2026-07-01 起禁止投资性宣称，是一切金饰营销动作的前置硬约束。",
+        "expected_output": "全渠道金饰文案整改完成清单",
+        "success_metric": "7 月前 100% 金饰文案通过合规审查",
+        "market": "Singapore",
+        "category": "黄金 / 饰品金",
+        "channel": "全渠道",
+        "priority": "P0",
+        "evidence_ids": ["intel-004"]
+      },
+      {
+        "action": "TikTok 珍珠日常穿搭短视频",
+        "detail": "为珍珠悦己线投放 15-30 秒日常穿搭/毕业季短视频，对齐 6 月毕业季，内容主打'日常配饰'。",
+        "rationale": "intel-003 显示年轻客群在 TikTok 把珍珠当日常配饰——营销需顺势用同一语境，并避开投资属性话术。",
+        "expected_output": "一组毕业季主题珍珠短视频及投放数据",
+        "success_metric": "短视频互动率高于账号均值，带动珍珠测试款询问",
+        "market": "Singapore",
+        "category": "珍珠",
+        "channel": "TikTok",
+        "priority": "P1",
+        "evidence_ids": ["intel-003"]
+      }
+    ],
+    "channel_team": [
+      {
+        "action": "竞标 Lazada 6 月轻奢流量位",
+        "detail": "为低克重/K金设计线竞标 Lazada 新加坡 6 月大促'轻奢设计款'流量位，重排选品匹配平台流量倾斜方向。",
+        "rationale": "Lazada 已把流量位改向轻奢设计款（intel-005），抢到该流量位是承接迁移需求的渠道前提。",
+        "expected_output": "6 月大促轻奢流量位投放方案",
+        "success_metric": "拿下目标流量位，大促期间该位 GMV 达标",
+        "market": "Singapore",
+        "category": "K金 / 低克重饰品金",
+        "channel": "Lazada",
+        "priority": "P0",
+        "evidence_ids": ["intel-005"]
+      },
+      {
+        "action": "投资金条转私域/门店触达",
+        "detail": "评估高克重投资金条在 Lazada 的陈列策略，因其退出主推位，转向私域与门店渠道触达投资型客群。",
+        "rationale": "intel-005 显示高克重投资金条已退出 Lazada 主推位——需为这部分客群另辟私域/门店触点，避免渠道断层。",
+        "expected_output": "投资金条私域/门店触达方案",
+        "success_metric": "投资金条客群在门店/私域的触达量不低于改版前",
+        "market": "Singapore",
+        "category": "投资金条",
+        "channel": "门店 / 私域",
+        "priority": "P2",
+        "evidence_ids": ["intel-005"]
+      }
+    ],
+    "management": [
+      {
+        "action": "拍板三策、定中策为默认",
+        "detail": "拍板上中下三策的选择，智囊团默认推荐中策；最终决策依赖珍珠小批量测试结果与金价结构性判断。",
+        "rationale": "三策取舍涉及库存与营销资源投入，须高层拍板；中策在机会与风险间平衡（intel-001 / intel-003 / intel-005）。",
+        "expected_output": "三策决策结论及配套资源盘子",
+        "success_metric": "决策在 6 月大促备货窗口前完成",
+        "market": "Singapore",
+        "category": "跨品类",
+        "priority": "P1",
+        "evidence_ids": ["intel-001", "intel-003", "intel-005"]
+      },
+      {
+        "action": "定 Pandora 错位竞争原则",
+        "detail": "就 Pandora 轻奢 K金卡位制定错位竞争原则——强化设计原创与本地文化元素，避免在 K金价格带打纯价格战。",
+        "rationale": "Pandora 在轻奢 K金价格带正面卡位（intel-002），正面价格战会抬高获客成本——须由高层定错位原则。",
+        "expected_output": "对 Pandora 的错位竞争原则文件",
+        "success_metric": "K金线不卷入价格战，毛利率维持目标区间",
+        "market": "Singapore",
+        "category": "K金",
+        "priority": "P1",
+        "evidence_ids": ["intel-002"]
+      }
+    ],
+    "risk_team": [
+      {
+        "action": "饰品金/婚庆金黄金套保",
+        "detail": "对饰品金/婚庆金原材料敞口建立黄金套保头寸，缓释金价上行对毛利的侵蚀。",
+        "rationale": "金价月内涨约 6%（intel-001），若不套保，饰品金/婚庆金毛利将被直接侵蚀。",
+        "expected_output": "黄金套保头寸建仓方案",
+        "success_metric": "套保覆盖率达到目标敞口比例",
+        "market": "Singapore",
+        "category": "饰品金 / 婚庆金",
+        "priority": "P0",
+        "evidence_ids": ["intel-001"]
+      },
+      {
+        "action": "建 ASAS 合规检查清单",
+        "detail": "建立 ASAS 新指引合规检查清单，作为所有金饰营销物料 7 月起上线前的强制审核关卡。",
+        "rationale": "ASAS 新指引（intel-004）7 月执行，须把合规检查制度化为上线前强制关卡，防止个案疏漏。",
+        "expected_output": "ASAS 合规检查清单及上线前审核流程",
+        "success_metric": "7 月起金饰物料上线前合规审核覆盖率 100%",
+        "market": "Singapore",
+        "category": "黄金 / 饰品金",
+        "priority": "P0",
+        "evidence_ids": ["intel-004"]
+      }
+    ]
+  },
+  "evidence_chain": [
+    {
+      "evidence_id": "intel-001",
+      "used_in": [
+        "signal:金价上行",
+        "opportunity:低克重K金设计线",
+        "risk:金价压缩毛利",
+        "watch:金价是否结构性"
+      ],
+      "source_reliability": "primary"
+    },
+    {
+      "evidence_id": "intel-002",
+      "used_in": ["signal:Pandora卡位", "risk:Pandora正面卡位"],
+      "source_reliability": "secondary"
+    },
+    {
+      "evidence_id": "intel-003",
+      "used_in": [
+        "signal:珍珠悦己情绪",
+        "opportunity:珍珠悦己试探",
+        "watch:珍珠购买意愿"
+      ],
+      "source_reliability": "unverified"
+    },
+    {
+      "evidence_id": "intel-004",
+      "used_in": ["risk:ASAS新规"],
+      "source_reliability": "primary"
+    },
+    {
+      "evidence_id": "intel-005",
+      "used_in": ["signal:Lazada流量改向", "opportunity:低克重K金设计线"],
+      "source_reliability": "primary"
+    }
+  ],
+  "expert_disagreements": [
+    {
+      "topic": "TikTok 珍珠热度是否构成可投入的市场机会",
+      "positions": [
+        {
+          "expert": "product_marketing_strategist",
+          "view": "珍珠品类在年轻悦己客群升温，是值得上新的新品方向。"
+        },
+        {
+          "expert": "consumer_insight_analyst",
+          "view": "这是社媒讨论情绪而非真实购买意愿，晒单客单价低，可能被高估。"
+        }
+      ],
+      "council_resolution": "采纳消费者洞察专家的谨慎立场，但不完全否定机会：定为低置信度 opportunity + watch_item，以小批量试水验证转化，不重仓。"
+    },
+    {
+      "topic": "金价上涨对黄金珠宝业务的总体方向",
+      "positions": [
+        {
+          "expert": "product_marketing_strategist",
+          "view": "金价上涨提升黄金品类关注度，利于黄金相关营销。"
+        },
+        {
+          "expert": "risk_compliance_analyst",
+          "view": "需拆分：利好投资金条，但抬高饰品金/婚庆金客单与成本、压制悦己消费与毛利。"
+        }
+      ],
+      "council_resolution": "采纳风险合规专家的拆分判断。最终结论按投资金条/饰品金/婚庆金/悦己消费分别表述，不做笼统利好结论。"
+    }
+  ],
+  "confidence": {
+    "level": "medium",
+    "score": 0.68,
+    "rationale": "5 条情报中一手来源 2 条（report、regulator）+ 半一手 1 条（ecommerce），一手占比约 40%，需求迁移与合规结论证据较硬；但珍珠机会仅靠单一未验证社媒来源、金价是否结构性存在机构分歧，故整体定为 medium 而非 high。"
+  },
+  "next_observation_points": [
+    "采集 Lazada / TikTok Shop 珍珠饰品的成交、加购、复购数据，验证 #pearlcore 情绪能否转化为真实购买意愿",
+    "持续跟踪金价走势及机构对'结构性 vs 脉冲型'的判断更新",
+    "跟踪 Pandora 新加坡 3 家门店的实际选址、定价与开业表现",
+    "采集 ASAS 新指引 7 月执行后的首批处罚或合规口径案例",
+    "监测婚庆金、足金克重款在金价上行下的实际销量变化"
+  ]
+}

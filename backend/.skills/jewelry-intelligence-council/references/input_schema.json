@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "珠宝海外市场情报输入 Schema",
+  "description": "情报数据清洗后、进入专家智囊团分析前的单条情报格式。一次智囊团调用接收一个 intelligence_batch（同一市场、同一时间窗的多条情报）。",
+  "type": "object",
+  "required": ["batch_meta", "items"],
+  "properties": {
+    "batch_meta": {
+      "type": "object",
+      "description": "本批情报的元信息，由情报清洗环节填充。",
+      "required": ["market", "time_window"],
+      "properties": {
+        "market": {
+          "type": "string",
+          "description": "本批情报聚焦的主市场，例如 Singapore / Dubai / Milan / Global。"
+        },
+        "region": {
+          "type": "string",
+          "description": "更大的区域归属，例如 东南亚 / 中东 / 南欧 / 全球。"
+        },
+        "time_window": {
+          "type": "string",
+          "description": "情报覆盖的时间窗，ISO 区间，例如 2026-05-01/2026-05-21。"
+        },
+        "item_count": {
+          "type": "integer",
+          "description": "本批情报条数，应与 items 数组长度一致。"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "description": "清洗后的结构化情报条目数组。",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "market",
+          "category",
+          "event_summary",
+          "published_at",
+          "confidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "情报唯一 ID，专家在 evidence 中必须引用此 ID。"
+          },
+          "market": {
+            "type": "string",
+            "description": "该条情报直接关联的市场，例如 Singapore / Dubai / Milan / Global。"
+          },
+          "region": {
+            "type": "string",
+            "description": "区域归属，例如 东南亚 / 中东 / 南欧。"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "news",
+              "social",
+              "ecommerce",
+              "regulator",
+              "brand_official",
+              "report",
+              "other"
+            ],
+            "description": "情报来源类型。regulator / brand_official / report 视为一手；news / social 视为二手。"
+          },
+          "source_name": {
+            "type": "string",
+            "description": "来源名称，例如 Straits Times / TikTok / Lazada / 迪拜经济与旅游局。"
+          },
+          "source_url": {
+            "type": "string",
+            "description": "原始链接，用于证据链回溯。"
+          },
+          "published_at": {
+            "type": "string",
+            "description": "情报发布时间，ISO 日期，例如 2026-05-12。"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "price",
+              "competition",
+              "product",
+              "regulation",
+              "channel",
+              "consumer",
+              "social",
+              "macro"
+            ],
+            "description": "情报主题分类。price=金价/原材料，competition=竞品动作，regulation=监管/合规，channel=渠道/电商，consumer=消费者，social=社媒舆情，macro=宏观（汇率/关税/地缘）。"
+          },
+          "event_summary": {
+            "type": "string",
+            "description": "清洗后的中文事件摘要（≤100 字），是专家分析的主要输入。"
+          },
+          "raw_excerpt": {
+            "type": "string",
+            "description": "原文极短摘录（≤200 字），用于专家核对语气与细节，禁止存全文。"
+          },
+          "sentiment": {
+            "type": "string",
+            "enum": ["positive", "neutral", "negative", "mixed"],
+            "description": "情报本身的舆情倾向（来源视角），不等于对我方业务的影响方向。"
+          },
+          "impact_area": {
+            "type": "array",
+            "description": "该情报可能影响的业务面，可多选。",
+            "items": {
+              "type": "string",
+              "enum": [
+                "product",
+                "marketing",
+                "channel",
+                "pricing",
+                "supply",
+                "compliance",
+                "brand"
+              ]
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "清洗环节对该情报真实性/可靠度的打分。一手来源通常 ≥0.8，社媒未核实通常 ≤0.6。"
+          },
+          "tags": {
+            "type": "array",
+            "description": "自由标签，例如 黄金 / 钻石 / K金 / 珍珠 / 彩宝 / 婚庆 / 悦己 / 联名。",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

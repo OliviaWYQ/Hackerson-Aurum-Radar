@@ -1,0 +1,74 @@
+# Target markets for global intelligence probes.
+# Used by probe_gdelt, probe_global_news, probe_federal_register, probe_tavily.
+
+JP:
+  name: Japan
+  languages: ["ja", "en"]
+  google_news:
+    hl: "ja"
+    gl: "JP"
+    ceid: "JP:ja"
+
+KR:
+  name: Korea
+  languages: ["ko", "en"]
+  google_news:
+    hl: "ko"
+    gl: "KR"
+    ceid: "KR:ko"
+
+SG:
+  name: Singapore
+  languages: ["en"]
+  google_news:
+    hl: "en-SG"
+    gl: "SG"
+    ceid: "SG:en"
+
+TH:
+  name: Thailand
+  languages: ["th", "en"]
+  google_news:
+    hl: "th"
+    gl: "TH"
+    ceid: "TH:th"
+
+MY:
+  name: Malaysia
+  languages: ["en", "ms"]
+  google_news:
+    hl: "en-MY"
+    gl: "MY"
+    ceid: "MY:en"
+
+VN:
+  name: Vietnam
+  languages: ["vi", "en"]
+  google_news:
+    hl: "vi"
+    gl: "VN"
+    ceid: "VN:vi"
+
+ID:
+  name: Indonesia
+  languages: ["id", "en"]
+  google_news:
+    hl: "id"
+    gl: "ID"
+    ceid: "ID:id"
+
+PH:
+  name: Philippines
+  languages: ["en"]
+  google_news:
+    hl: "en-PH"
+    gl: "PH"
+    ceid: "PH:en"
+
+US:
+  name: United States
+  languages: ["en"]
+  google_news:
+    hl: "en-US"
+    gl: "US"
+    ceid: "US:en"

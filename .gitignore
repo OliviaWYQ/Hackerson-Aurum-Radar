@@ -1,0 +1,56 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Node / frontend
+node_modules/
+dist/
+build/
+.vite/
+.npm/
+frontend/dist/
+
+# Local data, caches, and generated artifacts
+data_probe/output/
+*.db
+*.sqlite
+*.sqlite3
+*.duckdb
+uploads/
+tmp/
+temp/
+logs/
+*.log
+
+# Editors
+.idea/
+.vscode/

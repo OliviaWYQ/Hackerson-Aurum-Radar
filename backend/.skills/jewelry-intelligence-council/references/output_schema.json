@@ -1,0 +1,259 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "珠宝智囊团决策输出 Schema",
+  "description": "总参谋 Skill（chief_strategy_officer）综合五位专家意见后产出的最终决策报告。供管理层与业务团队直接阅读。",
+  "type": "object",
+  "required": [
+    "council_summary",
+    "market",
+    "time_window",
+    "key_signals",
+    "opportunities",
+    "risks",
+    "watch_items",
+    "strategic_options",
+    "department_actions",
+    "evidence_chain",
+    "expert_disagreements",
+    "confidence",
+    "next_observation_points"
+  ],
+  "properties": {
+    "council_summary": {
+      "type": "string",
+      "description": "面向管理层的整体结论（3-5 句）。必须给出明确判断方向，不允许泛泛而谈。"
+    },
+    "market": {
+      "type": "string",
+      "description": "本报告聚焦的市场。"
+    },
+    "time_window": {
+      "type": "string",
+      "description": "情报覆盖的时间窗，与输入 batch_meta.time_window 一致。"
+    },
+    "key_signals": {
+      "type": "array",
+      "description": "本批情报中最值得管理层关注的 3-6 个核心信号。",
+      "items": {
+        "type": "object",
+        "required": ["signal", "interpretation", "evidence_ids"],
+        "properties": {
+          "signal": { "type": "string", "description": "信号的客观描述。" },
+          "interpretation": {
+            "type": "string",
+            "description": "对我方业务意味着什么，区分品类（投资金/饰品金/婚庆金/悦己）与客群。"
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "支撑该信号的情报 ID。"
+          }
+        }
+      }
+    },
+    "opportunities": {
+      "type": "array",
+      "description": "可争取的业务机会。每条必须绑定证据与具体品类/渠道。",
+      "items": {
+        "type": "object",
+        "required": ["title", "detail", "category", "evidence_ids", "confidence"],
+        "properties": {
+          "title": { "type": "string" },
+          "detail": { "type": "string" },
+          "category": {
+            "type": "string",
+            "description": "涉及品类，例如 饰品金 / K金 / 珍珠 / 彩宝 / 钻石 / 婚庆 / 悦己。"
+          },
+          "evidence_ids": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "description": "需防范的业务风险。",
+      "items": {
+        "type": "object",
+        "required": ["title", "detail", "severity", "evidence_ids", "confidence"],
+        "properties": {
+          "title": { "type": "string" },
+          "detail": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "风险严重度。"
+          },
+          "evidence_ids": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "watch_items": {
+      "type": "array",
+      "description": "证据尚不足以定性、但需持续观察的事项。",
+      "items": {
+        "type": "object",
+        "required": ["item", "why_uncertain", "evidence_ids"],
+        "properties": {
+          "item": { "type": "string" },
+          "why_uncertain": {
+            "type": "string",
+            "description": "为什么暂时不能定性（证据不足/来源单一/趋势未确认）。"
+          },
+          "evidence_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "strategic_options": {
+      "type": "object",
+      "description": "上中下三策。上策进取、中策稳健、下策保守，各自标注前提与代价。",
+      "required": ["upper_strategy", "middle_strategy", "lower_strategy"],
+      "properties": {
+        "upper_strategy": { "$ref": "#/$defs/strategy_option" },
+        "middle_strategy": { "$ref": "#/$defs/strategy_option" },
+        "lower_strategy": { "$ref": "#/$defs/strategy_option" }
+      }
+    },
+    "department_actions": {
+      "type": "object",
+      "description": "按部门拆解的行动清单。每条行动必须具体到市场、品类、渠道、动作。",
+      "required": [
+        "product_team",
+        "marketing_team",
+        "channel_team",
+        "management",
+        "risk_team"
+      ],
+      "properties": {
+        "product_team": { "$ref": "#/$defs/action_list" },
+        "marketing_team": { "$ref": "#/$defs/action_list" },
+        "channel_team": { "$ref": "#/$defs/action_list" },
+        "management": { "$ref": "#/$defs/action_list" },
+        "risk_team": { "$ref": "#/$defs/action_list" }
+      }
+    },
+    "evidence_chain": {
+      "type": "array",
+      "description": "证据链：列出本报告引用的全部情报 ID 及其在哪个结论中被使用。",
+      "items": {
+        "type": "object",
+        "required": ["evidence_id", "used_in", "source_reliability"],
+        "properties": {
+          "evidence_id": { "type": "string" },
+          "used_in": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "该证据支撑的结论标题，例如 \"opportunity:珍珠悦己线\"。"
+          },
+          "source_reliability": {
+            "type": "string",
+            "enum": ["primary", "secondary", "unverified"],
+            "description": "证据来源可靠度等级。"
+          }
+        }
+      }
+    },
+    "expert_disagreements": {
+      "type": "array",
+      "description": "专家之间未达成一致的分歧点。如实保留，不和稀泥。",
+      "items": {
+        "type": "object",
+        "required": ["topic", "positions", "council_resolution"],
+        "properties": {
+          "topic": { "type": "string" },
+          "positions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "expert": { "type": "string" },
+                "view": { "type": "string" }
+              }
+            }
+          },
+          "council_resolution": {
+            "type": "string",
+            "description": "总参谋如何裁定，或为何选择暂不裁定（列为 watch_item）。"
+          }
+        }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "description": "本报告的整体置信度评估。",
+      "required": ["level", "score", "rationale"],
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        },
+        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rationale": {
+          "type": "string",
+          "description": "置信度依据：一手来源占比、证据数量、专家一致程度。证据不足必须降置信度。"
+        }
+      }
+    },
+    "next_observation_points": {
+      "type": "array",
+      "description": "下一轮情报采集应重点盯防的方向，给清洗/采集环节回流。",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "strategy_option": {
+      "type": "object",
+      "required": ["name", "description", "preconditions", "cost", "expected_outcome"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "classical_basis": {
+          "type": "string",
+          "description": "兵法依据：该策对应的兵法谋士计策与三十六计/兵法意象，例如 \"避钻攻金 + 文化定锚\"。来自 military_strategist 的 strategic_options_seed，不得编造策略库外计策。"
+        },
+        "preconditions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "采用该策略的前提条件。"
+        },
+        "cost": {
+          "type": "string",
+          "description": "该策略的代价/资源投入/风险敞口。"
+        },
+        "expected_outcome": { "type": "string" }
+      }
+    },
+    "action_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action", "detail", "rationale", "market", "priority", "evidence_ids"],
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "一句话动作标题（≤30 字，含品类与渠道），例如 \"Lazada 开 K金轻奢线节日专题页\"。是标题，不是完整执行说明。"
+          },
+          "detail": {
+            "type": "string",
+            "description": "执行细节：具体怎么做、做到什么程度、关键约束。是 action 的展开，不得与 action 雷同。"
+          },
+          "rationale": {
+            "type": "string",
+            "description": "为什么做这条——回溯到具体信号 / 机会 / 风险 / 计策与证据 id。每条 action 的 rationale 必须各不相同，严禁套用整体 council_summary。"
+          },
+          "expected_output": { "type": "string", "description": "预期产出（可交付物）。" },
+          "success_metric": { "type": "string", "description": "验证指标，尽量可量化。" },
+          "market": { "type": "string" },
+          "category": { "type": "string", "description": "涉及品类，可选。" },
+          "channel": { "type": "string", "description": "涉及渠道，可选。" },
+          "priority": {
+            "type": "string",
+            "enum": ["P0", "P1", "P2"],
+            "description": "P0=本周内，P1=本月内，P2=本季度。"
+          },
+          "evidence_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+feedparser>=6.0.10
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+lxml>=5.0.0
+
+# Optional (opt-in via run_all.py --include or standalone probes):
+# tavily-python>=0.3.0   # probe_tavily
+# praw>=7.7.0            # probe_reddit
+# pytrends>=4.9.2        # probe_trends

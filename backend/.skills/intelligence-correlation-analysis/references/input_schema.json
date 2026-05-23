@@ -1,0 +1,175 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "情报关联分析输入 Schema v2.0",
+  "description": "已完成预分类和评分的结构化情报事件集合，供关联分析识别因果传导链路、隐性依赖和时序模式。前置校验（第零步）要求：items ≥ 3 条、time_window ≤ 90 天、每条 item 含非空 env_factors 和 impact_scope、至少 2 对事件有结构化重叠。",
+  "type": "object",
+  "required": ["batch_meta", "items"],
+  "properties": {
+    "batch_meta": {
+      "type": "object",
+      "required": ["market", "time_window"],
+      "properties": {
+        "market": {
+          "type": "string",
+          "description": "聚焦市场代码，例如 CN / US / IN / SG / GLOBAL。"
+        },
+        "region": {
+          "type": "string",
+          "description": "区域归属，例如 东南亚 / 中东 / 南欧。"
+        },
+        "time_window": {
+          "oneOf": [
+            {
+              "type": "string",
+              "description": "ISO 区间字符串，例如 2026-05-01/2026-05-21。"
+            },
+            {
+              "type": "object",
+              "required": ["start", "end"],
+              "properties": {
+                "start": { "type": "string", "description": "ISO8601 起始日期。" },
+                "end": { "type": "string", "description": "ISO8601 结束日期。" }
+              }
+            }
+          ],
+          "description": "情报覆盖时间窗，跨度不得超过 90 天。"
+        },
+        "item_count": {
+          "type": "integer",
+          "description": "本批情报条数，应与 items 数组长度一致。"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "description": "已完成预分类的结构化情报事件数组。至少 3 条。",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "collected_at", "source_category", "env_factors", "impact_scope", "signal_direction", "intensity", "confidence"],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "事件唯一标识符，关联分析中必须引用此 ID。"
+          },
+          "market": {
+            "type": "string",
+            "description": "该条事件关联的市场。"
+          },
+          "region": {
+            "type": "string",
+            "description": "区域归属。"
+          },
+          "collected_at": {
+            "type": "string",
+            "description": "事件采集时间，ISO8601 格式。"
+          },
+          "published_at": {
+            "type": "string",
+            "description": "事件发布时间，ISO8601 格式（如与 collected_at 不同）。"
+          },
+          "source_category": {
+            "type": "string",
+            "description": "来自预分类的信息来源轴分类，例如 competition / product / social_media / regulation / channel / macro / supply_chain。"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": ["news", "social", "ecommerce", "regulator", "brand_official", "report", "other"],
+            "description": "情报来源类型。regulator / brand_official / report 视为一手；news / social 视为二手。"
+          },
+          "source_name": {
+            "type": "string",
+            "description": "来源名称。"
+          },
+          "source_url": {
+            "type": "string",
+            "description": "原始链接，用于证据链回溯。"
+          },
+          "env_factors": {
+            "type": "array",
+            "description": "底层影响因子（F1-F7），必须非空。",
+            "items": {
+              "type": "object",
+              "required": ["factor_id"],
+              "properties": {
+                "factor_id": {
+                  "type": "string",
+                  "description": "因子 ID：F1(供给约束) / F2(结构重塑) / F3(需求迁移) / F4(制度摩擦) / F5(价格传导) / F6(叙事压力) / F7(渠道博弈)。"
+                },
+                "name": { "type": "string" },
+                "is_primary": { "type": "boolean" }
+              }
+            }
+          },
+          "conduction_chain": {
+            "type": "object",
+            "description": "传导链路归属（A-E）。",
+            "properties": {
+              "chain_id": {
+                "type": "string",
+                "description": "链路 ID：A(供给→成本) / B(政策→运营) / C(需求→品类) / D(叙事→定价) / E(渠道→利润)。"
+              },
+              "node_position": {
+                "type": "string",
+                "description": "该事件在链路中的位置描述。"
+              }
+            }
+          },
+          "signal_direction": {
+            "type": "string",
+            "enum": ["positive", "negative", "mixed", "neutral"],
+            "description": "信号方向。"
+          },
+          "intensity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "事件强度。"
+          },
+          "impact_scope": {
+            "type": "array",
+            "description": "影响范围标签，必须非空。例如 [黄金, 钻石, 东南亚]。",
+            "items": { "type": "string" }
+          },
+          "key_claim": {
+            "type": "string",
+            "description": "50 字内核心事实摘要。"
+          },
+          "event_summary": {
+            "type": "string",
+            "description": "事件摘要（兼容字段，如 key_claim 未提供则使用此字段）。"
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "自由标签。"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0.20,
+            "maximum": 0.95,
+            "description": "预分类环节对该事件真实性/可靠度的打分。"
+          }
+        }
+      }
+    },
+    "historical_context": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "event_id": { "type": "string" },
+              "market": { "type": "string" },
+              "source_category": { "type": "string" },
+              "key_claim": { "type": "string" },
+              "collected_at": { "type": "string" }
+            }
+          }
+        }
+      ],
+      "description": "可选：近期历史事件摘要，供时序模式匹配与传导时滞参考。"
+    }
+  }
+}
